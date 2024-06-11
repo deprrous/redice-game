@@ -1,25 +1,49 @@
-// Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0, хоёрдугаар тоглогчийг 1 гэж тэмдэглэе.
-var activePlayer = 0;
+/* global variable defination*/
 
+// idewhitei toglogchiig zaah huwisagch
+var activePlayer;
 // Тоглогчдын цуглуулсан оноог хадгалах хувьсагч
 var scores = [0, 0];
-
 // Тоглогчийн ээлжиндээ цуглуулж байгаа оноог хадгалах хувьсагч
-var roundScore = 0;
+var roundScore;
 
-// Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй, 1-6 гэсэн утгыг энэ хувьсагчид санамсаргүйгээр үүсгэж өгнө.
-var diceNumber = Math.floor(Math.random() * 6) + 1;
-
-// Програм эхлэхэд бэлтгэе
-document.getElementById("score-0").textContent = "0";
-document.getElementById("score-1").textContent = "0";
-document.getElementById("current-0").textContent = "0";
-document.getElementById("current-1").textContent = "0";
-
+// util DOM
 var diceDom = document.querySelector(".dice");
-diceDom.style.display = "none";
+
+// togloom ehlehed beltgene.
+function initGame() {
+  // Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0, хоёрдугаар тоглогчийг 1 гэж тэмдэглэе.
+  activePlayer = 0;
+  // Тоглогчдын цуглуулсан оноог хадгалах хувьсагч-iig 0,0 bolgono
+  scores = [0, 0];
+  // Тоглогчийн ээлжиндээ цуглуулж байгаа оноог хадгалах хувьсагч-iig 0 bolgono
+  roundScore = 0;
+  // Програм эхлэхэд бэлтгэе
+  document.getElementById("score-0").textContent = "0";
+  document.getElementById("score-1").textContent = "0";
+  document.getElementById("current-0").textContent = "0";
+  document.getElementById("current-1").textContent = "0";
+
+  // toglogchdiin neriig butsaaj gargah
+  document.getElementById("name-0").textContent = "Player 1";
+  document.getElementById("name-1").textContent = "Player 2";
+
+  document.querySelector(".player-0-panel").classList.remove("winner");
+  document.querySelector(".player-1-panel").classList.remove("winner");
+
+  document.querySelector(".player-0-panel").classList.remove("active");
+  document.querySelector(".player-1-panel").classList.remove("active");
+
+  document.querySelector(".player-0-panel").classList.add("active");
+
+  diceDom.style.display = "none";
+}
+
+// Programmiig ehluuleh
+initGame();
 
 document.querySelector(".btn-roll").addEventListener("click", function () {
+  // Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй, 1-6 гэсэн утгыг энэ хувьсагчид санамсаргүйгээр үүсгэж өгнө.
   var diceNumber = Math.floor(Math.random() * 6) + 1;
 
   // for (let i; i <= 100; i++) {
@@ -85,3 +109,6 @@ function switchPlayer() {
   // shoog tur alga bolgono.
   diceDom.style.display = "none";
 }
+
+// Togloomiig shineer ehluuleh buttonii event listener
+document.querySelector(".btn-new").addEventListener("click", initGame);
