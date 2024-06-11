@@ -1,5 +1,7 @@
 /* global variable defination*/
 
+// togloomiig tuluwiig hadgalah huwisagch
+var isGameOver;
 // idewhitei toglogchiig zaah huwisagch
 var activePlayer;
 // Тоглогчдын цуглуулсан оноог хадгалах хувьсагч
@@ -12,6 +14,9 @@ var diceDom = document.querySelector(".dice");
 
 // togloom ehlehed beltgene.
 function initGame() {
+  //togloom ehlelee gedeg tuluw oruulna.
+  isGameOver = false;
+
   // Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0, хоёрдугаар тоглогчийг 1 гэж тэмдэглэе.
   activePlayer = 0;
   // Тоглогчдын цуглуулсан оноог хадгалах хувьсагч-iig 0,0 bolgono
@@ -43,51 +48,58 @@ function initGame() {
 initGame();
 
 document.querySelector(".btn-roll").addEventListener("click", function () {
-  // Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй, 1-6 гэсэн утгыг энэ хувьсагчид санамсаргүйгээр үүсгэж өгнө.
-  var diceNumber = Math.floor(Math.random() * 6) + 1;
+  if (!isGameOver) {
+    // Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй, 1-6 гэсэн утгыг энэ хувьсагчид санамсаргүйгээр үүсгэж өгнө.
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
 
-  // for (let i; i <= 100; i++) {
-  //   diceDom.style.display = "block";
-  //   var roll = Math.floor(Math.random() * 6) + 1;
-  //   diceDom.src = "dice-" + roll + ".png";
-  //   diceDom.style.display = "none";
-  // }
-  diceDom.style.display = "block";
-  diceDom.src = "dice-" + diceNumber + ".png";
+    diceDom.style.display = "block";
+    diceDom.src = "dice-" + diceNumber + ".png";
 
-  // buusan too ni 1 ees ylgaatai bol idewhitei toglogchiin onoog nemegduulne.
-  if (diceNumber !== 1) {
-    // 1-ees ylgaatai too buulaa,buusan toog toglogchid nemne.
-    roundScore = roundScore + diceNumber;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
+    // buusan too ni 1 ees ylgaatai bol idewhitei toglogchiin onoog nemegduulne.
+    if (diceNumber !== 1) {
+      // 1-ees ylgaatai too buulaa,buusan toog toglogchid nemne.
+      roundScore = roundScore + diceNumber;
+      document.getElementById("current-" + activePlayer).textContent =
+        roundScore;
+    } else {
+      // 1 buusan uchir toglogchiin eeljiig ene hesegt solino.
+      // ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono.
+      // toglogchiin eeljiig solih.
+      switchPlayer();
+    }
   } else {
-    // 1 buusan uchir toglogchiin eeljiig ene hesegt solino.
-    // ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono.
-    // toglogchiin eeljiig solih.
-    switchPlayer();
+    alert("Game Over!,Enter the New Game button");
   }
 });
 
 document.querySelector(".btn-hold").addEventListener("click", function () {
-  // ug toglogchiin tsugluulsan eeljiin onoog total onoon deer nemne.
-  scores[activePlayer] += roundScore;
+  if (!isGameOver) {
+    // ug toglogchiin tsugluulsan eeljiin onoog total onoon deer nemne.
+    scores[activePlayer] += roundScore;
 
-  // delgetsend onoog uurchilnu.
-  document.getElementById("score-" + activePlayer).textContent =
-    scores[activePlayer];
+    // delgetsend onoog uurchilnu.
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
 
-  // Xojson esehiig shalgah.
-  if (scores[activePlayer] >= 10) {
-    document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("winner");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
+    // Xojson esehiig shalgah.
+    if (scores[activePlayer] >= 10) {
+      // togloomiig duussan tuluwt oruulna.
+      isGameOver = true;
+
+      // Winnner textiig nerniih ni orond haruulna.
+      document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+    } else {
+      //toglogchiin eeljiig solino.
+      switchPlayer();
+    }
   } else {
-    //toglogchiin eeljiig solino.
-    switchPlayer();
+    alert("Game Over!,Enter the New Game button");
   }
 });
 
