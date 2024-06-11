@@ -38,21 +38,50 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
     document.getElementById("current-" + activePlayer).textContent = roundScore;
   } else {
     // 1 buusan uchir toglogchiin eeljiig ene hesegt solino.
-
     // ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono.
-    roundScore = 0;
-    document.getElementById("current-" + activePlayer).textContent = 0;
-
-    // toglogchiin eeljiig nogoo toglogchruu shiljuulne.
-    // herew idewhitei toglogch ni 0 baiwal 1 bolgo.
-    // ugui bol 0 bolgo.
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-
-    // to transfer red dot
-    document.querySelector(".player-0-panel").classList.toggle("active");
-    document.querySelector(".player-1-panel").classList.toggle("active");
-
-    // shoog tur alga bolgono.
-    diceDom.style.display = "none";
+    // toglogchiin eeljiig solih.
+    switchPlayer();
   }
 });
+
+document.querySelector(".btn-hold").addEventListener("click", function () {
+  // ug toglogchiin tsugluulsan eeljiin onoog total onoon deer nemne.
+  scores[activePlayer] += roundScore;
+
+  // delgetsend onoog uurchilnu.
+  document.getElementById("score-" + activePlayer).textContent =
+    scores[activePlayer];
+
+  // Xojson esehiig shalgah.
+  if (scores[activePlayer] >= 10) {
+    document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.add("winner");
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.remove("active");
+  } else {
+    //toglogchiin eeljiig solino.
+    switchPlayer();
+  }
+});
+
+// toglogchiin eeljiig solih function.
+function switchPlayer() {
+  // ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono.
+  roundScore = 0;
+  document.getElementById("current-" + activePlayer).textContent = 0;
+
+  // toglogchiin eeljiig nogoo toglogchruu shiljuulne.
+  // herew idewhitei toglogch ni 0 baiwal 1 bolgo.
+  // ugui bol 0 bolgo.
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+  // to transfer red dot
+  document.querySelector(".player-0-panel").classList.toggle("active");
+  document.querySelector(".player-1-panel").classList.toggle("active");
+
+  // shoog tur alga bolgono.
+  diceDom.style.display = "none";
+}
