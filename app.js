@@ -1,5 +1,5 @@
 // Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0, хоёрдугаар тоглогчийг 1 гэж тэмдэглэе.
-var activePlayer = 1;
+var activePlayer = 0;
 
 // Тоглогчдын цуглуулсан оноог хадгалах хувьсагч
 var scores = [0, 0];
@@ -22,6 +22,37 @@ diceDom.style.display = "none";
 document.querySelector(".btn-roll").addEventListener("click", function () {
   var diceNumber = Math.floor(Math.random() * 6) + 1;
 
+  // for (let i; i <= 100; i++) {
+  //   diceDom.style.display = "block";
+  //   var roll = Math.floor(Math.random() * 6) + 1;
+  //   diceDom.src = "dice-" + roll + ".png";
+  //   diceDom.style.display = "none";
+  // }
   diceDom.style.display = "block";
   diceDom.src = "dice-" + diceNumber + ".png";
+
+  // buusan too ni 1 ees ylgaatai bol idewhitei toglogchiin onoog nemegduulne.
+  if (diceNumber !== 1) {
+    // 1-ees ylgaatai too buulaa,buusan toog toglogchid nemne.
+    roundScore = roundScore + diceNumber;
+    document.getElementById("current-" + activePlayer).textContent = roundScore;
+  } else {
+    // 1 buusan uchir toglogchiin eeljiig ene hesegt solino.
+
+    // ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono.
+    roundScore = 0;
+    document.getElementById("current-" + activePlayer).textContent = 0;
+
+    // toglogchiin eeljiig nogoo toglogchruu shiljuulne.
+    // herew idewhitei toglogch ni 0 baiwal 1 bolgo.
+    // ugui bol 0 bolgo.
+    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+    // to transfer red dot
+    document.querySelector(".player-0-panel").classList.toggle("active");
+    document.querySelector(".player-1-panel").classList.toggle("active");
+
+    // shoog tur alga bolgono.
+    diceDom.style.display = "none";
+  }
 });
