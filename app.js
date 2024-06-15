@@ -82,7 +82,7 @@ document.querySelector(".btn-hold").addEventListener("click", function () {
       scores[activePlayer];
 
     // Xojson esehiig shalgah.
-    if (scores[activePlayer] >= 10) {
+    if (scores[activePlayer] >= 100) {
       // togloomiig duussan tuluwt oruulna.
       isGameOver = true;
 
