@@ -49,26 +49,42 @@ initGame();
 
 document.querySelector(".btn-roll").addEventListener("click", function () {
   if (!isGameOver) {
-    // Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй, 1-6 гэсэн утгыг энэ хувьсагчид санамсаргүйгээр үүсгэж өгнө.
-    var diceNumber = Math.floor(Math.random() * 6) + 1;
+    var diceDom = document.querySelector(".dice"); // Ensure this points to the correct dice element
 
+    // Display the dice
     diceDom.style.display = "block";
-    diceDom.src = "dice-" + diceNumber + ".png";
 
-    // buusan too ni 1 ees ylgaatai bol idewhitei toglogchiin onoog nemegduulne.
-    if (diceNumber !== 1) {
-      // 1-ees ylgaatai too buulaa,buusan toog toglogchid nemne.
-      roundScore = roundScore + diceNumber;
-      document.getElementById("current-" + activePlayer).textContent =
-        roundScore;
-    } else {
-      // 1 buusan uchir toglogchiin eeljiig ene hesegt solino.
-      // ene toglogchiin eeljindee tsugluulsan onoog 0 bolgono.
-      // toglogchiin eeljiig solih.
-      switchPlayer();
+    // Rolling animation function
+    function rollDiceAnimation() {
+      var randomDice = Math.floor(Math.random() * 6) + 1;
+      diceDom.src = "dice-" + randomDice + ".png";
     }
+
+    // Generate the final dice number
+    var finalDiceNumber = Math.floor(Math.random() * 6) + 1;
+
+    // Rolling animation: Change the dice image every 100ms for 1 second
+    for (let i = 0; i < 10; i++) {
+      setTimeout(rollDiceAnimation, i * 100);
+    }
+
+    // Set the final dice image after the rolling animation completes
+    setTimeout(function () {
+      diceDom.src = "dice-" + finalDiceNumber + ".png";
+
+      // Game logic after rolling the dice
+      if (finalDiceNumber !== 1) {
+        // If the dice roll is not 1, add the result to the current player's round score
+        roundScore += finalDiceNumber;
+        document.getElementById("current-" + activePlayer).textContent =
+          roundScore;
+      } else {
+        // If the dice roll is 1, switch the player's turn
+        switchPlayer();
+      }
+    }, 1000);
   } else {
-    alert("Game Over!,Enter the New Game button");
+    alert("Game Over! Please start a new game.");
   }
 });
 
